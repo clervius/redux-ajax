@@ -36,10 +36,16 @@ export const updateFriend = (options) => {
 }
 
 export const DELETE_FRIEND = 'DELETE_FRIEND';
-export const deleteFriend = (options) => {
-	const payload = axios.delete(server + 'delete-friend', options);
+export const deleteFriend = (i) => {
+	const options = {
+		index: i
+	}
+
+	const payload = axios.delete(server + 'delete-friend', {data: options});
+	console.log(options)
 	return {
 		type: DELETE_FRIEND,
 		payload,
 	}
+
 }

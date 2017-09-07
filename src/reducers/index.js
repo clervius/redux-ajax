@@ -5,16 +5,12 @@ const friendsReducer = (friends = [], action) => {
 	switch(action.type) {
 		case GET_FRIENDS:
 			return action.payload.data;
-			break;
 		case ADD_FRIEND:
 			return action.payload.data;
-			break;
 		case UPDATE_FRIEND:
 			return action.payload.data;
-			break;
 		case DELETE_FRIEND:
 			return action.payload.data;
-			break;
 		default:
 			return friends;
 	}

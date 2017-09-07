@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFriends, addFriend, updateFriend, deleteFriend } from '../actions';
-import axios from 'axios';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400, darkBlack} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
@@ -28,13 +27,6 @@ const iconButtonElement = (
     <MoreVertIcon color={grey400} />
   </IconButton>
 );
-const rightIconMenu = (
-  <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>Reply</MenuItem>
-    <MenuItem>Forward</MenuItem>
-    <MenuItem>Delete</MenuItem>
-  </IconMenu>
-);
 
 class FriendsList extends Component {
 	componentDidMount() {
@@ -45,60 +37,68 @@ class FriendsList extends Component {
 
 	render() {
         return (
-        	<MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        	
 	            <div className="container">
-	            	<div className="leftSide">
-	            		<List>
-	            			<Subheader>All friends ({this.props.friends.length})</Subheader>
-	            			{this.props.friends.map((friend,i) => {
-	            				return (
-	            					<div>
-		            					<ListItem
-								          leftAvatar={<Avatar src={`https://api.adorable.io/avatars/${friend.email}`} />}
-								          rightIconButton={rightIconMenu}
-								          primaryText={friend.name}
-								          secondaryText={
-								            <p>
-								              <span style={{color: darkBlack}}>{friend.age} years old</span><br />
-								              {friend.email}
-								            </p>
-								          }
-								          secondaryTextLines={2}
-								        />
-								        <Divider inset={true} />
-	            					</div>
-	            				);
-	            			})}
-	            		</List>
-		            </div>
-	                <div className="rightSide">
-	                	<h2>Add To Friends</h2>
-	                	<form onSubmit={e => this.props.addFriend(e)} id="newFriend">
-	                		<TextField
-							    hintText="Enter name"
-							    floatingLabelText="Name"
-							    type="text"
-							    name="name"
-							/>
-							<TextField
-							    hintText="Enter Age"
-							    floatingLabelText="Age"
-							    type="number"
-							    name="age"
-							/>
-							<TextField
-							    hintText="Enter email"
-							    floatingLabelText="Email Address"
-							    type="email"
-							    name="email"
-							/>
-							<br />
-							<br /> <br />
-							<RaisedButton label="Add Friend" primary={true} type="submit" />
-	                	</form>
-	                </div>
+	            	<MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+		            	<div className="leftSide">
+		            		<List>
+		            			<Subheader>All friends ({this.props.friends.length})</Subheader>
+		            			{this.props.friends.map((friend,i) => {
+		            				return (
+		            					<div>
+			            					<ListItem
+									          leftAvatar={<Avatar src={`https://api.adorable.io/avatars/${friend.email}`} />}
+									          rightIconButton={
+									          	<IconMenu iconButtonElement={iconButtonElement}>
+									          		<MenuItem onClick={() => this.props.deleteFriend(i)}>Delete {friend.name}</MenuItem>
+									          	</IconMenu>
+									          }
+									          primaryText={friend.name}
+									          secondaryText={
+									            <p>
+									              <span style={{color: darkBlack}}>{friend.age} years old</span><br />
+									              {friend.email}
+									            </p>
+									          }
+									          secondaryTextLines={2}
+									        />
+									        <Divider inset={true} />
+		            					</div>
+		            				);
+		            			})}
+		            		</List>
+			            </div>
+			        </MuiThemeProvider>    
+			        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>    
+		                <div className="rightSide">
+		                	<h2>Add To Friends</h2>
+		                	<form onSubmit={e => this.props.addFriend(e)} id="newFriend">
+		                		<TextField
+								    hintText="Enter name"
+								    floatingLabelText="Name"
+								    type="text"
+								    name="name"
+								/>
+								<TextField
+								    hintText="Enter Age"
+								    floatingLabelText="Age"
+								    type="number"
+								    name="age"
+								/>
+								<TextField
+								    hintText="Enter email"
+								    floatingLabelText="Email Address"
+								    type="email"
+								    name="email"
+								/>
+								<br />
+								<br /> <br />
+								<RaisedButton label="Add Friend" primary={true} type="submit" />
+		                	</form>
+		                </div>
+		            </MuiThemeProvider> 
 	            </div>
-            </MuiThemeProvider>
+            
         );
     }
 
