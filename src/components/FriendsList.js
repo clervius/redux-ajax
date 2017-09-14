@@ -37,7 +37,6 @@ class FriendsList extends Component {
 
 	render() {
         return (
-        	
 	            <div className="container">
 	            	<MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
 		            	<div className="leftSide">
@@ -45,8 +44,9 @@ class FriendsList extends Component {
 		            			<Subheader>All friends ({this.props.friends.length})</Subheader>
 		            			{this.props.friends.map((friend,i) => {
 		            				return (
-		            					<div>
+		            					<div key={"friend" + i}>
 			            					<ListItem
+
 									          leftAvatar={<Avatar src={`https://api.adorable.io/avatars/${friend.email}`} />}
 									          rightIconButton={
 									          	<IconMenu iconButtonElement={iconButtonElement}>
